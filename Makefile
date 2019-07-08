@@ -16,3 +16,14 @@ homography: $(OBJ)
 
 clean:
 	rm -f homography $(OBJ)
+
+
+# hack (compatibility flags for badly configured OSX clang)
+#
+# The following conditional statement appends "-std=c++11" to CXXFLAGS when the
+# macro __APPLE__ is defined.  This is useful to circumvent a bug that arises
+# when compiling gdal with clang-9 on modern OSX.
+ifeq (1,$(shell $(CXX) -x c++ $(CXXFLAGS) -dM -E -</dev/null|grep __APPLE__|cut -c19-))
+override CXXFLAGS := $(CXXFLAGS) -std=c++11
+endif
+
