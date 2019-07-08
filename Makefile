@@ -1,6 +1,6 @@
 CXXFLAGS ?= -march=native -O3
 override CXXFLAGS := $(CXXFLAGS) `gdal-config --cflags`
-override CXXLIBS  := $(CXXLIBS) `gdal-config --libs`
+override LDLIBS  := $(LDLIBS) `gdal-config --libs`
 
 OBJ = main.o \
       LibImages/LibImages.o \
@@ -12,5 +12,7 @@ OBJ = main.o \
       LibHomography/Splines.o
 
 homography: $(OBJ)
+	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
-clean: ; rm -f homography $(OBJ)
+clean:
+	rm -f homography $(OBJ)
