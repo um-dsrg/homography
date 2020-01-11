@@ -132,6 +132,7 @@ int main(int c, char* v[])
     double translation[9] = {1, 0, (double) x, 0, 1, (double) y, 0, 0, 1};
     double hom_compensated[9];
     matrix_33_product(hom_compensated, hom, translation);
+    free(hom);
     if (verbose) time.get_time("Compute needed ROI");
 
 	// create the output image
@@ -151,6 +152,7 @@ int main(int c, char* v[])
 
 		// copy the ROI data to marc's image struct
 		Image roi(roi_data, w, h, 1);
+		free(roi_data);
 		if (verbose) time.get_time("Read needed ROI");
 
 		// call the mapping function
