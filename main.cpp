@@ -152,7 +152,7 @@ int main(int c, char* v[])
 
 		// copy the ROI data to marc's image struct
 		Image roi(roi_data, w, h, 1);
-		free(roi_data);
+		CPLFree(roi_data);
 		if (verbose) time.get_time("Read needed ROI");
 
 		// call the mapping function
@@ -170,10 +170,8 @@ int main(int c, char* v[])
 	}
 	out.write(fname_output);
 
-	// NOTE:
-	// The GDAL objects used above are not freed automatically.
-	// (it would be pointless to free them manually just before
-	// exiting the program)
+	// free all gdal stuff
+	GDALDestroyDriverManager();
 
-    return EXIT_SUCCESS;
+	return EXIT_SUCCESS;
 }
